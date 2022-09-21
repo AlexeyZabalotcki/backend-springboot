@@ -21,12 +21,11 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/test")
-    public List<Category> test() {
+    @GetMapping("/all")
+    public List<Category> findAllB() {
 
-        List<Category> list = categoryRepository.findAll();
+        return categoryRepository.findAllByOrderByTitleAsc();
 
-        return list;
     }
 
     @PostMapping("/add")
