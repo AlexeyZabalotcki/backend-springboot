@@ -2,6 +2,7 @@ package com.alexeyzabalotcki.tasklist.backendspringboot.controller;
 
 import com.alexeyzabalotcki.tasklist.backendspringboot.entity.Priority;
 import com.alexeyzabalotcki.tasklist.backendspringboot.repository.PriorityRepository;
+import com.alexeyzabalotcki.tasklist.backendspringboot.search.PrioritySearchValues;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,4 +82,10 @@ public class PriorityController {
         }
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Priority>> search(@RequestBody PrioritySearchValues values) {
+        return ResponseEntity.ok(priorityRepository.findByTitle(values.getText()));
+    }
 }
+

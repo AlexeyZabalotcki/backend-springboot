@@ -3,6 +3,7 @@ package com.alexeyzabalotcki.tasklist.backendspringboot.controller;
 import com.alexeyzabalotcki.tasklist.backendspringboot.entity.Category;
 import com.alexeyzabalotcki.tasklist.backendspringboot.entity.Priority;
 import com.alexeyzabalotcki.tasklist.backendspringboot.repository.CategoryRepository;
+import com.alexeyzabalotcki.tasklist.backendspringboot.search.CategorySearchValues;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,5 +79,10 @@ public class CategoryController {
             return new ResponseEntity("That id: " + id + " not found", HttpStatus.NOT_ACCEPTABLE);
         }
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Category>> search(@RequestBody CategorySearchValues values) {
+        return ResponseEntity.ok(categoryRepository.findByTitle(values.getText()));
     }
 }
