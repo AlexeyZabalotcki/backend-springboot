@@ -61,7 +61,9 @@ public class PriorityController {
             return new ResponseEntity("missed param: you MUST fill color form", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        return ResponseEntity.ok(priorityRepository.save(priority));
+        priorityRepository.save(priority);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
