@@ -3,6 +3,7 @@ package com.alexeyzabalotcki.tasklist.backendspringboot.controller;
 import com.alexeyzabalotcki.tasklist.backendspringboot.entity.Priority;
 import com.alexeyzabalotcki.tasklist.backendspringboot.repository.PriorityRepository;
 import com.alexeyzabalotcki.tasklist.backendspringboot.search.PrioritySearchValues;
+import com.alexeyzabalotcki.tasklist.backendspringboot.util.MyLogger;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,9 @@ public class PriorityController {
     }
 
     @GetMapping("/all")
-    public List<Priority> findAllB() {
+    public List<Priority> findAll() {
+
+        MyLogger.displayMethod("PriorityController: findAll()-------------------------------------------------");
 
         return priorityRepository.findAllByOrderByIdAsc();
 
@@ -30,6 +33,8 @@ public class PriorityController {
 
     @PostMapping("/add")
     public ResponseEntity<Priority> add(@RequestBody Priority priority) {
+
+        MyLogger.displayMethod("PriorityController: add()-------------------------------------------------");
 
         if (priority.getId() != null && priority.getId() != 0) {
             return new ResponseEntity("redundant param: id MUST be null", HttpStatus.NOT_ACCEPTABLE);
@@ -43,6 +48,8 @@ public class PriorityController {
 
     @PutMapping("/update")
     public ResponseEntity<Priority> update(@RequestBody Priority priority) {
+
+        MyLogger.displayMethod("PriorityController: update()-------------------------------------------------");
 
         if (priority.getId() == null || priority.getId() == 0) {
             return new ResponseEntity("Error: id MUST be fill", HttpStatus.NOT_ACCEPTABLE);
@@ -60,6 +67,8 @@ public class PriorityController {
     @GetMapping("/id/{id}")
     public ResponseEntity<Priority> findById(@PathVariable Long id) {
 
+        MyLogger.displayMethod("PriorityController: findById()-------------------------------------------------");
+
         Priority priority = null;
 
         try {
@@ -74,6 +83,9 @@ public class PriorityController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Priority> deleteById(@PathVariable Long id) {
+
+        MyLogger.displayMethod("PriorityController: deleteById()-------------------------------------------------");
+
         try {
             priorityRepository.deleteById(id);
         } catch (EmptyResultDataAccessException ex) {
@@ -85,6 +97,9 @@ public class PriorityController {
 
     @PostMapping("/search")
     public ResponseEntity<List<Priority>> search(@RequestBody PrioritySearchValues values) {
+
+        MyLogger.displayMethod("PriorityController: search()-------------------------------------------------");
+
         return ResponseEntity.ok(priorityRepository.findByTitle(values.getText()));
     }
 }
