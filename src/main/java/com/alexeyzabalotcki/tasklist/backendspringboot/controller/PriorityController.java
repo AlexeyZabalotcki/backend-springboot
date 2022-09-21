@@ -21,7 +21,7 @@ public class PriorityController {
     }
 
     @GetMapping("/all")
-    public List<Priority> findAllB() {
+    public List<Priority> findAll() {
 
         return priorityRepository.findAllByOrderByIdAsc();
 

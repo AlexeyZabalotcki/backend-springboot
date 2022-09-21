@@ -22,7 +22,7 @@ public class CategoryController {
     }
 
     @GetMapping("/all")
-    public List<Category> findAllB() {
+    public List<Category> findAll() {
 
         return categoryRepository.findAllByOrderByTitleAsc();
 
