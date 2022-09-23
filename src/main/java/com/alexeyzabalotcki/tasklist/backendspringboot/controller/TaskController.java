@@ -5,6 +5,9 @@ import com.alexeyzabalotcki.tasklist.backendspringboot.repository.TaskRepository
 import com.alexeyzabalotcki.tasklist.backendspringboot.search.TaskSearchValues;
 import com.alexeyzabalotcki.tasklist.backendspringboot.util.MyLogger;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -94,7 +97,7 @@ public class TaskController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Task>> search(@RequestBody TaskSearchValues values) {
+    public ResponseEntity<Page<Task>> search(@RequestBody TaskSearchValues values) {
 
         MyLogger.displayMethod("CategoryController: search()-------------------------------------------------");
 
@@ -103,6 +106,22 @@ public class TaskController {
         Integer completed = values.getCompleted() != null ? values.getCompleted() : null;
         String title = values.getTitle() != null ? values.getTitle() : null;
 
-        return ResponseEntity.ok(taskRepository.findByParams(title, completed, categoryId, priorityId));
+
+        String sortColumn = values.getSortColumn() != null ? values.getSortColumn() : null;
+        String sortDirection = values.getSortDirection() != null ? values.getSortDirection() : null;
+
+        Integer pageNumber = values.getPageNumber() != null ? values.getPageNumber() : null;
+        Integer pageSize = values.getPageSize() != null ? values.getPageSize() : null;
+
+        Sort.Direction direction = sortDirection == null || sortDirection.trim().length() == 0 ||
+                sortDirection.trim().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Sort sort = Sort.by(direction, sortColumn);
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page result = taskRepository.findByParams(title, completed, categoryId, priorityId, pageRequest);
+
+        return ResponseEntity.ok(result);
     }
 }
