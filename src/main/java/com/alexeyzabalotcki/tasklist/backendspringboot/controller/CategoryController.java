@@ -39,7 +39,7 @@ public class CategoryController {
         if (category.getId() != null && category.getId() != 0) {
             return new ResponseEntity("redundant param: id MUST be null", HttpStatus.NOT_ACCEPTABLE);
         }
-        if (category.getTitle() != null || category.getTitle().trim().length() == 0) {
+        if (category.getTitle() == null || category.getTitle().trim().length() == 0) {
             return new ResponseEntity("missed param: title", HttpStatus.NOT_ACCEPTABLE);
         }
 
@@ -99,6 +99,6 @@ public class CategoryController {
 
         MyLogger.displayMethod("CategoryController: search()-------------------------------------------------");
 
-        return ResponseEntity.ok(categoryService.findByTitle(values.getText()));
+        return ResponseEntity.ok(categoryService.findByTitle(values.getTitle()));
     }
 }
