@@ -103,7 +103,7 @@ public class PriorityController {
 
         MyLogger.displayMethod("PriorityController: search()-------------------------------------------------");
 
-        return ResponseEntity.ok(priorityService.findByTitle(values.getText()));
+        return ResponseEntity.ok(priorityService.findByTitle(values.getTitle()));
     }
 }
 

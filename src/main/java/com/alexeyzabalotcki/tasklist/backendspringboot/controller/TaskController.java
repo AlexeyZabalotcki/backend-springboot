@@ -104,6 +104,7 @@ public class TaskController {
 
         Long categoryId = values.getCategoryId() != null ? values.getCategoryId() : null;
         Long priorityId = values.getPriorityId() != null ? values.getPriorityId() : null;
+
         Integer completed = values.getCompleted() != null ? values.getCompleted() : null;
         String title = values.getTitle() != null ? values.getTitle() : null;
 
