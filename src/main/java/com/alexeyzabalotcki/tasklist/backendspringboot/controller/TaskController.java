@@ -98,22 +98,22 @@ public class TaskController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Page<Task>> search(@RequestBody TaskSearchValues values) {
+    public ResponseEntity<Page<Task>> search(@RequestBody TaskSearchValues taskSearchValues) {
 
         MyLogger.displayMethod("CategoryController: search()-------------------------------------------------");
 
-        Long categoryId = values.getCategoryId() != null ? values.getCategoryId() : null;
-        Long priorityId = values.getPriorityId() != null ? values.getPriorityId() : null;
+        Long categoryId = taskSearchValues.getCategoryId() != null ? taskSearchValues.getCategoryId() : null;
+        Long priorityId = taskSearchValues.getPriorityId() != null ? taskSearchValues.getPriorityId() : null;
 
-        Integer completed = values.getCompleted() != null ? values.getCompleted() : null;
-        String title = values.getTitle() != null ? values.getTitle() : null;
+        Integer completed = taskSearchValues.getCompleted() != null ? taskSearchValues.getCompleted() : null;
+        String title = taskSearchValues.getTitle() != null ? taskSearchValues.getTitle() : null;
 
 
-        String sortColumn = values.getSortColumn() != null ? values.getSortColumn() : null;
-        String sortDirection = values.getSortDirection() != null ? values.getSortDirection() : null;
+        String sortColumn = taskSearchValues.getSortColumn() != null ? taskSearchValues.getSortColumn() : null;
+        String sortDirection = taskSearchValues.getSortDirection() != null ? taskSearchValues.getSortDirection() : null;
 
-        Integer pageNumber = values.getPageNumber() != null ? values.getPageNumber() : null;
-        Integer pageSize = values.getPageSize() != null ? values.getPageSize() : null;
+        Integer pageNumber = taskSearchValues.getPageNumber() != null ? taskSearchValues.getPageNumber() : null;
+        Integer pageSize = taskSearchValues.getPageSize() != null ? taskSearchValues.getPageSize() : null;
 
         Sort.Direction direction = sortDirection == null || sortDirection.trim().length() == 0 ||
                 sortDirection.trim().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
